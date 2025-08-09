@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: gpt4-chat
+    runtime: node
+    plan: starter
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: CHAT_PASSWORD
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        fromService:
+          type: web
+          name: gpt4-chat
+          property: host
+    autoDeploy: true
+    disk:
+      name: gpt4-chat-disk
+      mountPath: /opt/render/project/src
+      sizeGB: 1
+    scaling:
+      minInstances: 1
+      maxInstances: 3
+      targetMemoryPercent: 80
+      targetCPUPercent: 80

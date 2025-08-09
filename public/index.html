@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT-4 채팅</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-container" class="container">
+        <div class="login-box">
+            <h1>GPT-4 채팅</h1>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" id="login-btn" class="primary-btn">
+                    <span class="btn-text">로그인</span>
+                    <div class="spinner hidden"></div>
+                </button>
+            </form>
+            <div id="login-error" class="error-message hidden"></div>
+        </div>
+    </div>
+
+    <!-- Chat Interface -->
+    <div id="chat-container" class="container hidden">
+        <header class="chat-header">
+            <h1>GPT-4 채팅</h1>
+            <div class="header-controls">
+                <button id="theme-toggle" class="icon-btn" title="테마 변경">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button id="logout-btn" class="icon-btn" title="로그아웃">
+                    <span>로그아웃</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="chat-main">
+            <div class="chat-history" id="chat-history">
+                <div class="welcome-message">
+                    <h2>GPT-4 채팅에 오신 것을 환영합니다</h2>
+                    <p>아래에 메시지를 입력하여 대화를 시작하세요.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="chat-footer">
+            <form id="chat-form" class="chat-form">
+                <div class="input-container">
+                    <textarea 
+                        id="message-input" 
+                        placeholder="메시지를 입력하세요..." 
+                        rows="1"
+                        maxlength="4000"
+                    ></textarea>
+                    <button type="submit" id="send-btn" class="send-btn" disabled>
+                        <span class="btn-content">
+                            <span class="send-text">전송</span>
+                            <div class="send-spinner hidden"></div>
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="spinner-large"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
