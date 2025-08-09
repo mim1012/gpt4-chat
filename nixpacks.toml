@@ -2,10 +2,7 @@
 nixPkgs = ["nodejs-18_x"]
 
 [phases.install]
-cmds = ["npm ci --production=false"]
-
-[phases.build]
-cmds = ["npm run build || true"]
+cmds = ["npm install --production=false"]
 
 [start]
 cmd = "npm start"
