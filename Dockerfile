@@ -1,20 +1,20 @@
-# Use Node.js 18 LTS
-FROM node:18-alpine
+# Use Node.js 18
+FROM node:18-slim
 
 # Set working directory
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
+COPY package.json ./
 
-# Install dependencies
-RUN npm install --production
+# Install dependencies using npm install
+RUN npm install --legacy-peer-deps
 
-# Copy application files
+# Copy all files
 COPY . .
 
 # Expose port
 EXPOSE 3000
 
-# Start the application
+# Start application
 CMD ["npm", "start"]
