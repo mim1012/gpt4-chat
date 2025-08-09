@@ -9,6 +9,7 @@ yarn-error.log*
 .env.local
 .env.production
 .env.*.local
+API_KEY.txt
 
 # IDE
 .vscode/
