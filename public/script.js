@@ -205,7 +205,20 @@ class ChatApp {
         } catch (error) {
             console.error('Chat error:', error);
             this.hideTypingIndicator();
-            this.addMessage('assistant', '죄송합니다. 연결 오류가 발생했습니다. 다시 시도해주세요.');
+            
+            // 더 자세한 에러 메시지
+            let errorMessage = '죄송합니다. 오류가 발생했습니다.';
+            
+            if (error.message.includes('Failed to fetch')) {
+                errorMessage = '서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.';
+            } else if (error.message.includes('401')) {
+                errorMessage = '세션이 만료되었습니다. 다시 로그인해주세요.';
+                setTimeout(() => this.handleUnauthorized(), 2000);
+            } else if (error.message.includes('500')) {
+                errorMessage = 'OpenAI API 오류입니다. 잠시 후 다시 시도해주세요.';
+            }
+            
+            this.addMessage('assistant', errorMessage);
         }
     }
 
@@ -287,7 +300,7 @@ class ChatApp {
         typingDiv.className = 'message assistant typing-indicator';
         typingDiv.innerHTML = `
             <div class="message-content">
-                <span>GPT-4 is typing</span>
+                <span>GPT-4o가 입력 중...</span>
                 <div class="typing-dots">
                     <div class="typing-dot"></div>
                     <div class="typing-dot"></div>
@@ -316,7 +329,7 @@ class ChatApp {
     clearChatHistory() {
         this.chatHistory.innerHTML = `
             <div class="welcome-message">
-                <h2>Welcome to GPT-4 Chat</h2>
+                <h2>GPT-4o 채팅에 오신 것을 환영합니다</h2>
                 <p>Start a conversation by typing a message below.</p>
             </div>
         `;
