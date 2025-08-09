@@ -38,8 +38,8 @@ app.use(helmet({
 // CORS configuration
 app.use(cors({
     origin: process.env.NODE_ENV === 'production' 
-        ? process.env.FRONTEND_URL || 'https://yourdomain.com'
-        : ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000'],
+        ? [process.env.FRONTEND_URL, 'https://gpt4-chat-production-fe96.up.railway.app'].filter(Boolean)
+        : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://127.0.0.1:3000'],
     credentials: true,
 }));
 
@@ -52,11 +52,12 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    proxy: true, // Trust Railway proxy
     cookie: {
         secure: process.env.NODE_ENV === 'production', // HTTPS only in production
         httpOnly: true, // Prevent XSS attacks
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
-        sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' for cross-origin
     },
     name: 'gpt4-chat-session', // Don't use default session name
 }));
